@@ -23,6 +23,7 @@ namespace ParkingGame
 
         private void Credits_Click(object sender, RoutedEventArgs e)
         {
+            Credits.Visibility = Visibility.Visible;
 
         }
 
@@ -35,6 +36,11 @@ namespace ParkingGame
 		{
             GameWindow GW = new GameWindow();
             GW.Show();
+		}
+
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			Credits.Visibility = Visibility.Collapsed;
 		}
 	}
 }

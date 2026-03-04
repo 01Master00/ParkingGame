@@ -16,13 +16,13 @@
                     FontSize="20" Background="LightGray" FontWeight="Bold" Click="PlayClick"/>
                     <Button Canvas.Left="570" Canvas.Top="350" Width="160" Height="30" Content="Credits"
                     FontSize="20" Background="LightGray" FontWeight="Bold" Click="Credits_Click"/>
-                    <Button Canvas.Left="570" Canvas.Top="400" Width="160" Height="30" Content="Exit"
+					<Button Canvas.Left="570" Canvas.Top="400" Width="160" Height="30" Content="Exit"
                     FontSize="20" Background="LightGray" FontWeight="Bold" Click="Exit_Click"/>
-                </Canvas>
+				</Canvas>
             </Viewbox>
         </Grid>
-        <Grid x:Name="Credits" Visibility="Collapsed">
-
-        </Grid>
+        <Grid x:Name="Credits" Visibility="Collapsed" Background="AliceBlue">
+			<Button Content="Back" Click="BackButton_Click"/>
+		</Grid>
     </Grid>
 </Window>
