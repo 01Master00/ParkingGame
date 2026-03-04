@@ -29,11 +29,11 @@ namespace ParkingGame
 		{
 			try
 			{
-				for (int i = 0; i > Convert.ToInt32(Gwidth); i++)
+				for (int i = 0; i > Gwidth.Value; i++)
 				{
 					Game.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 				}
-				for (int i = 0; i > Convert.ToInt32(Gheigt); i++)
+				for (int i = 0; i > Gheight.Value; i++)
 				{
 					Game.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 				}
@@ -41,8 +41,7 @@ namespace ParkingGame
 			}
 			catch(Exception ex)
 			{
-				Gwidth.Text = "Hiba, számot adjon meg. " + ex.Message;
-				Gheigt.Text = "Hiba, számot adjon meg. " + ex.Message;
+				Error.Content = "Hiba, számot adjon meg. " + ex.Message;
 			}
 		}
 	}

@@ -30,5 +30,11 @@ namespace ParkingGame
         {
             Close();
         }
-    }
+
+		private void PlayClick(object sender, RoutedEventArgs e)
+		{
+            GameWindow GW = new GameWindow();
+            GW.Show();
+		}
+	}
 }
