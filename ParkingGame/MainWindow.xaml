@@ -8,10 +8,10 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid x:Name="Menu" Visibility="Visible">
-            <Viewbox Stretch="Uniform">
+            <Viewbox Stretch="Fill">
                 <Canvas Width="800" Height="450">
-                    <Image Source="/Resources/carbg.png" Canvas.Left="-20" Canvas.Top="0" Width="836" Height="450" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Canvas.Left="10" Canvas.Top="360" FontSize="50" FontWeight="ExtraBold" FontFamily="a">Parking Game</TextBlock>
+                    <Image Source="/Resources/carbg.png" Canvas.Top="0" Width="800" Height="450" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Canvas.Left="10" Canvas.Top="360" FontSize="50" FontWeight="ExtraBold">Parking Game</TextBlock>
                     <Button Canvas.Left="570" Canvas.Top="300" Width="160" Height="30" Content="Play"
                     FontSize="20" Background="LightGray" FontWeight="Bold"/>
                     <Button Canvas.Left="570" Canvas.Top="350" Width="160" Height="30" Content="Credits"
