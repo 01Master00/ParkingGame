@@ -10,8 +10,6 @@
 		<TextBlock Text="COR" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 		<Grid x:Name="Game" Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <TextBlock Text="Print(Hello World)" FontSize="100"></TextBlock>
-
 		</Grid>
 	</Grid>
 </Window>
