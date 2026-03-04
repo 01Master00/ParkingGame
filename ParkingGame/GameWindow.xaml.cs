@@ -44,5 +44,18 @@ namespace ParkingGame
 				Error.Content = "Hiba, számot adjon meg. " + ex.Message;
 			}
 		}
+
+
+		private void Gwidth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			GlabelWidth.Content = "Adja meg a pálya szélességét ami jelenleg " + Math.Floor(Gwidth.Value);
+
+		}
+
+		private void Gheight_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			GlabelHeight.Content = "Adja meg a pálya magasságát ami jelenleg " + Math.Floor(Gheight.Value);
+
+		}
 	}
 }
