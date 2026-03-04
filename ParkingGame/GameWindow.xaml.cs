@@ -37,6 +37,7 @@ namespace ParkingGame
 				{
 					Game.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 				}
+				question.Visibility = Visibility.Collapsed;
 			}
 			catch(Exception ex)
 			{
