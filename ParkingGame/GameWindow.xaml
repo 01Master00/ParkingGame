@@ -9,8 +9,12 @@
 	<Grid>
 		<TextBlock Text="COR" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 		<Grid x:Name="Game" Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-
+			<StackPanel Width="800" Height="800" x:Name="question">
+				<Label Content="Adja meg mekkora legyen a pálya" Height="200"/>
+				<TextBlock x:Name="Gwidth" Text="x" Width="300" Height="200" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+				<TextBlock x:Name="Gheigt" Text="y" Width="300" Height="200" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+				<Button Content="Start" Click="StartGame"/>
+			</StackPanel>
 
 		</Grid>
 	</Grid>

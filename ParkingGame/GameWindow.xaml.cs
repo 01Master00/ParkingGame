@@ -24,5 +24,25 @@ namespace ParkingGame
 			InitializeComponent();
 			
 		}
+
+		private void StartGame(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				for (int i = 0; i > Convert.ToInt32(Gwidth); i++)
+				{
+					Game.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+				}
+				for (int i = 0; i > Convert.ToInt32(Gheigt); i++)
+				{
+					Game.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+				}
+			}
+			catch(Exception ex)
+			{
+				Gwidth.Text = "Hiba, számot adjon meg. " + ex.Message;
+				Gheigt.Text = "Hiba, számot adjon meg. " + ex.Message;
+			}
+		}
 	}
 }
