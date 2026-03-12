@@ -9,18 +9,18 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="GameWindow" Height="900" Width="1000">
-	<Grid>
-		<Grid x:Name="Game" Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<StackPanel Width="800" Height="800" x:Name="question">
-				<Label x:Name="Error" Content="Adja meg mekkora legyen a pálya" FontSize="50"/>
-				<Label x:Name="GlabelWidth" Content="Adja meg a pálya széleségét ami jelenleg 4" FontSize="20"/>
-				<Slider x:Name="Gwidth" Width="800" VerticalAlignment="Bottom" Minimum="4" Maximum="9" ValueChanged="Gwidth_ValueChanged"/>
-				<Label x:Name="GlabelHeight" Content="Adja meg a pálya magasságát ami jelenleg 4" FontSize="20"/>
-				<Slider x:Name="Gheight" Width="800" VerticalAlignment="Bottom" Maximum="9" Minimum="4" ValueChanged="Gheight_ValueChanged" />
-				<Button Content="Start" Click="StartGame"/>
-				
-			</StackPanel>
+    
+        <Grid x:Name="Game" Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Width="800" Height="800" x:Name="question">
+                <Label x:Name="Error" Content="Adja meg mekkora legyen a pálya" FontSize="50"/>
+                <Label x:Name="GlabelWidth" Content="Adja meg a pálya széleségét ami jelenleg 4" FontSize="20"/>
+                <Slider x:Name="Gwidth" Width="800" VerticalAlignment="Bottom" Minimum="4" Maximum="9" ValueChanged="Gwidth_ValueChanged"/>
+                <Label x:Name="GlabelHeight" Content="Adja meg a pálya magasságát ami jelenleg 4" FontSize="20"/>
+                <Slider x:Name="Gheight" Width="800" VerticalAlignment="Bottom" Maximum="9" Minimum="4" ValueChanged="Gheight_ValueChanged" />
+                <Button Content="Start" Click="StartGame"/>
 
-		</Grid>
-	</Grid>
+            </StackPanel>
+
+        </Grid>
+   
 </Window>

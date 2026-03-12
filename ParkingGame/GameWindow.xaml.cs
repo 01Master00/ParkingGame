@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -29,19 +30,36 @@ namespace ParkingGame
 		{
 			try
 			{
-				for (int i = 0; i > Gwidth.Value; i++)
+				Game.RowDefinitions.Clear();
+                Game.ColumnDefinitions.Clear();
+
+                for (int i = 0; i < Gwidth.Value; i++)
 				{
 					Game.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 				}
-				for (int i = 0; i > Gheight.Value; i++)
+				for (int i = 0; i < Gheight.Value; i++)
 				{
 					Game.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 				}
 				question.Visibility = Visibility.Collapsed;
-			}
+
+				for (int i = 0; i < Gwidth.Value; i++)
+                {
+                    for (int j = 0; j < Gheight.Value; j++)
+                    {
+                        Button btn = new Button();
+                        btn.Content = "X";
+						btn.Width = Game.ActualWidth / Gheight.Value;
+						btn.Height = Game.ActualHeight / Gwidth.Value;
+                        Grid.SetRow(btn, i);
+                        Grid.SetColumn(btn, j);
+                        Game.Children.Add(btn);
+                    }
+                }
+            }
 			catch(Exception ex)
 			{
-				Error.Content = "Hiba, számot adjon meg. " + ex.Message;
+				Error.Content = "Hiba " + ex.Message;
 			}
 		}
 
