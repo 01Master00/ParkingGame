@@ -26,13 +26,15 @@ namespace ParkingGame
 
 		}
 
+        private double cellWidth; //univerzális változók, ez alapján látom hol vannak a cellák, és hogy mekkora egy cella. Hangsúlyban a HOL
+        private double cellHeight;
 		private void CanvaFelosztas()
 		{
             double width = Game.ActualWidth;
             double height = Game.ActualHeight;
-            double cellWidth = width / Gwidth.Value;
-            double cellHeight = height / Gheight.Value;
-            // ide jöhet a pálya felosztása, a cellák létrehozása és az autók generálása
+            cellWidth = width / Gwidth.Value;
+            cellHeight = height / Gheight.Value;
+            // ide jöhet majd az autók generálása
             for (int i = 0; i < Gwidth.Value; i++)
             {
                 for (int j = 0; j < Gheight.Value; j++)
@@ -45,7 +47,7 @@ namespace ParkingGame
                         Stroke = Brushes.Black,
                         Fill = Brushes.LightGray
                     };
-                    Canvas.SetLeft(rect, i * cellWidth);
+                    Canvas.SetLeft(rect, i * cellWidth);  //FONTOS:   LEFT - TOP.  ezeket használjuk mérőezköznek
                     Canvas.SetTop(rect, j * cellHeight);
                     Game.Children.Add(rect);
                 }
@@ -60,6 +62,26 @@ namespace ParkingGame
 			//AutoGen();
 
 		}
+
+        public bool Check(Cord c) //ha nem szabad helyre néz akkor false, ha szabad akkor true
+        {
+            if (c.x < 0 || c.y < 0 || c.x >= Gwidth.Value || c.y >= Gheight.Value)
+            {
+                return false; //pályán kívül van
+            }
+            foreach (UIElement child in Game.Children)  //ez a megoldás energiaigényes, lehet változtatni kell
+            {
+                double l = Canvas.GetLeft(child);
+                double t = Canvas.GetTop(child);
+                int x = (int)(l / cellWidth);
+                int y = (int)(t / cellHeight);
+                if (x == c.x && y == c.y)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         private void Gwidth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
