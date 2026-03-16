@@ -10,28 +10,23 @@ namespace ParkingGame
     internal class Auto
     {
         Button Button;
-        int X;
-        int Y;
+        Cord Cords;
         int Direction;
 
-        public Auto(Button b, int x, int y, int direction)
+        public Auto(Button b, int dir, Cord cords1)  // dir: 0-3-ig, 0: felfelé, 1: jobbra, 2: lefelé, 3: balra
         {
             Button = b;
-            X = x;
-            Grid.SetRow(Button, x);
-            Y = y;
-            Grid.SetColumn(Button, y);
-            Direction = direction;
+            Cords = cords1;
+            Grid.SetRow(b, cords.x);
+            Grid.SetColumn(b, cords.y);
+            Direction = dir;
         }
 
-        public void RemoveCar()
-        {
-            Button.Visibility = System.Windows.Visibility.Collapsed;
-        }
+
 
         public Button button { get => Button; set => Button = value; }
-        public int x1 { get => X; set => X = value; }
-        public int y1 { get => Y; set => Y = value; }
-        public int Direction1 { get => Direction; }
+
+        public int direction { get => Direction; }
+        internal Cord cords { get => Cords; set => Cords = value; }
     }
 }

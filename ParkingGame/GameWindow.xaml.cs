@@ -23,48 +23,46 @@ namespace ParkingGame
 		public GameWindow()
 		{
 			InitializeComponent();
-			
+
 		}
+
+		private void CanvaFelosztas()
+		{
+            double width = Game.ActualWidth;
+            double height = Game.ActualHeight;
+            double cellWidth = width / Gwidth.Value;
+            double cellHeight = height / Gheight.Value;
+            // ide jöhet a pálya felosztása, a cellák létrehozása és az autók generálása
+            for (int i = 0; i < Gwidth.Value; i++)
+            {
+                for (int j = 0; j < Gheight.Value; j++)
+                {
+					
+                    Rectangle rect = new Rectangle
+                    {
+                        Width = cellWidth,
+                        Height = cellHeight,
+                        Stroke = Brushes.Black,
+                        Fill = Brushes.LightGray
+                    };
+                    Canvas.SetLeft(rect, i * cellWidth);
+                    Canvas.SetTop(rect, j * cellHeight);
+                    Game.Children.Add(rect);
+                }
+            }
+        }
 
 		private void StartGame(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Game.RowDefinitions.Clear();
-                Game.ColumnDefinitions.Clear();
+			CanvaFelosztas();
+			question.Visibility = Visibility.Collapsed;
 
-                for (int i = 0; i < Gwidth.Value; i++)
-				{
-					Game.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-				}
-				for (int i = 0; i < Gheight.Value; i++)
-				{
-					Game.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-				}
-				question.Visibility = Visibility.Collapsed;
+			//AutoGen();
 
-				for (int i = 0; i < Gwidth.Value; i++)
-                {
-                    for (int j = 0; j < Gheight.Value; j++)
-                    {
-                        Button btn = new Button();
-                        btn.Content = "X";
-						btn.Width = Game.ActualWidth / Gheight.Value;
-						btn.Height = Game.ActualHeight / Gwidth.Value;
-                        Grid.SetRow(btn, i);
-                        Grid.SetColumn(btn, j);
-                        Game.Children.Add(btn);
-                    }
-                }
-            }
-			catch(Exception ex)
-			{
-				Error.Content = "Hiba " + ex.Message;
-			}
 		}
 
 
-		private void Gwidth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Gwidth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			GlabelWidth.Content = "Adja meg a pálya magasságát ami jelenleg " + Math.Floor(Gwidth.Value);
 
@@ -75,5 +73,6 @@ namespace ParkingGame
 			GlabelHeight.Content = "Adja meg a pálya szélességét ami jelenleg " + Math.Floor(Gheight.Value);
 
 		}
+
 	}
 }
