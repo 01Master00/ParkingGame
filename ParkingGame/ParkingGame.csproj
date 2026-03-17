@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="Resources\carbg.png" />
+    <None Remove="Resources\placeholderbg.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\carbg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\placeholderbg.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

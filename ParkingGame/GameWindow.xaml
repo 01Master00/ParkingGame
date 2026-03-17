@@ -11,16 +11,33 @@
         Title="GameWindow" Height="900" Width="1000">
 
     <Grid>
-        <Canvas x:Name="Game" Width="800" Height="800"/>
+        <Image Source="/Resources/placeholderbg.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Canvas x:Name="Game" MinWidth="800" MinHeight="800" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid x:Name="question" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightGray">
+            <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Background="White" Padding="20">
+                <StackPanel MaxWidth="800">
+                    <Label x:Name="Error" Content="Pályaméretezés" FontSize="80" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
+                    <Label x:Name="GlabelSize" Content="Itt tudod személyre szabni a pálya méretét" FontSize="30" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+                    <Label x:Name="GlabelWidth" Content="Magasság (jelenleg 4)" FontSize="30"/>
+                    <Slider x:Name="Gwidth" Minimum="4" Maximum="9" ValueChanged="Gwidth_ValueChanged" HorizontalAlignment="Stretch" Margin="20,0">
+                        <Slider.LayoutTransform>
+                            <ScaleTransform ScaleY="2"/>
+                        </Slider.LayoutTransform>
+                    </Slider>
+                    <Label x:Name="GlabelHeight" Content="Hosszúság (jelenleg 4)" FontSize="30"/>
 
+                    <Slider x:Name="Gheight" Minimum="4" Maximum="9" ValueChanged="Gheight_ValueChanged" HorizontalAlignment="Stretch" Margin="20,0">
+                        <Slider.LayoutTransform>
+                            <ScaleTransform ScaleY="2"/>
+                        </Slider.LayoutTransform>
+                    </Slider>
 
-        <StackPanel Width="800" Height="800" x:Name="question">
-            <Label x:Name="Error" Content="Adja meg mekkora legyen a pálya" FontSize="50"/>
-            <Label x:Name="GlabelWidth" Content="Adja meg a pálya magasságát ami jelenleg 4" FontSize="20"/>
-            <Slider x:Name="Gwidth" Width="800" VerticalAlignment="Bottom" Minimum="4" Maximum="9" ValueChanged="Gwidth_ValueChanged"/>
-            <Label x:Name="GlabelHeight" Content="Adja meg a pálya szélességét ami jelenleg 4" FontSize="20"/>
-            <Slider x:Name="Gheight" Width="800" VerticalAlignment="Bottom" Maximum="9" Minimum="4" ValueChanged="Gheight_ValueChanged" />
-            <Button Content="Start" Click="StartGame"/>
-        </StackPanel>
+                    <Button Content="Start" Click="StartGame" FontSize="40" HorizontalAlignment="Center" Margin="0,40,0,0" Width="300" Background="Green" FontWeight="ExtraBold"/>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+        <Button Content="Vissza" Click="Back_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
     </Grid>
 </Window>
