@@ -13,6 +13,7 @@
     <Grid>
         <Image Source="/Resources/placeholderbg.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Canvas x:Name="Game" MinWidth="800" MinHeight="800" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
         <Grid x:Name="question" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightGray">
             <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Background="White" Padding="20">
                 <StackPanel MaxWidth="800">

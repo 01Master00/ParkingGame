@@ -22,7 +22,21 @@
             </Viewbox>
         </Grid>
         <Grid x:Name="Credits" Visibility="Collapsed" Background="AliceBlue">
-			<Button Content="Back" Click="BackButton_Click"/>
-		</Grid>
+            <Canvas x:Name="CreditsCanvas" Width="800" Height="300" Background="Transparent">
+                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
+               Canvas.Left="50" Canvas.Top="20"/>
+                <TextBlock Text="Berki" FontSize="24"
+               Canvas.Left="100" Canvas.Top="180"/>
+                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
+               Canvas.Left="325" Canvas.Top="20"/>
+                <TextBlock Text="Kramer" FontSize="24"
+               Canvas.Left="365" Canvas.Top="180"/>
+                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
+               Canvas.Left="600" Canvas.Top="20"/>
+                <TextBlock Text="Farkas" FontSize="24"
+               Canvas.Left="645" Canvas.Top="180"/>
+            </Canvas>
+            <Button Content="Vissza" Click="BackButton_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
+        </Grid>
     </Grid>
 </Window>
