@@ -48,10 +48,9 @@ namespace ParkingGame
             }
         }
 
-		private void StartGame(object sender, RoutedEventArgs e)
+		private void StartGame()
 		{
-			question.Visibility = Visibility.Collapsed;
-
+            CanvaFelosztas();
 			//AutoGen();
 
 		}
@@ -80,5 +79,13 @@ namespace ParkingGame
         {
             Close();
         }
-    }
+
+		private void Level_Click(object sender, RoutedEventArgs e)
+		{
+            Button b = sender as Button;
+			ga = new GameArea(Convert.ToInt32(b.Tag));
+			LVLselect.Visibility = Visibility.Collapsed;
+            StartGame();
+		}
+	}
 }
