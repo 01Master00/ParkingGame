@@ -50,7 +50,6 @@ namespace ParkingGame
 
 		private void StartGame(object sender, RoutedEventArgs e)
 		{
-			CanvaFelosztas();
 			question.Visibility = Visibility.Collapsed;
 
 			//AutoGen();
