@@ -35,7 +35,7 @@ namespace ParkingGame
 
 
         //csekkolja a valid autolpacementet True ha jó, False ha rossz
-        public bool CheckSurroundings(Auto auto, GameWindow gw)
+        public Cord CheckSurroundings(Auto auto, GameWindow gw)
         {
             Cord CheckCord;
             int dir = auto.direction;
@@ -44,7 +44,7 @@ namespace ParkingGame
             if (auto.headC.y != auto.tailC.y && auto.headC.x != auto.tailC.x) // nem valid autó, killswich
             {
                 MessageBox.Show("Nem valid autó, a két koordináta nem egy vonalban van!");
-                return false;
+                return null;
             }
             switch (dir)
             {
@@ -62,12 +62,12 @@ namespace ParkingGame
                     break;
                 default:  //csak 4 irány van, ha ez nem stimmel akkor valami nagyon rossz van
                     MessageBox.Show("Nem valid irány");
-                    return false;
+                    return null;
             }
 
             for (int i = 0; i < 5; i++) //i: (-1)-irány és óra járásnak megfelelően halad
             {
-                if (!CheckCord.DeepCheck()) return false; //megnézi hogy van-e hely minden kocsinak a környéken
+                if (CheckCord.DeepCheck(gw) != null) return CheckCord.DeepCheck(gw); //megnézi hogy van-e hely minden kocsinak a környéken
                 if (dir % 2 == 0) // vertikális autó
                 {
                     switch (i) // Checkcords-on relatív kordináták segítségével végiglépkedek, és megnézem hogy van-e ott autó, vagy pályán kívül van-e
@@ -91,7 +91,7 @@ namespace ParkingGame
                             CheckCord.y++;
                             break;
                         default:
-                            return true;
+                            return null;
                     }
                 }
                 else // horizontális autó
@@ -117,11 +117,11 @@ namespace ParkingGame
                             CheckCord.x++;
                             break;
                         default:
-                            return true;
+                            return null;
                     }
                 }
             }
-            return true;
+            return null;
 
         }
     }
