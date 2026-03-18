@@ -10,7 +10,14 @@
 
   <ItemGroup>
     <None Remove="Resources\carbg.png" />
+    <None Remove="Resources\music.mp3" />
     <None Remove="Resources\placeholderbg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\music.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
