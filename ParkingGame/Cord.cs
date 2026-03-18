@@ -23,23 +23,51 @@ namespace ParkingGame
         public int x { get => X; set => X = value; }
         public int y { get => Y; set => Y = value; }
 
-        //Ez a függvény majd megkapja a játékostól a koordinátákat, és megnézi hogy szabad-e oda helyezni egy autót. Ha nem akkor false, ha igen akkor true
-        public bool DeepCheck()
-        {
-            //megnézi hogy van-e hely minden kocsinak a környéken
-            return true;
-        }
+		//Ez a függvény majd megkapja a játékostól a koordinátákat, és megnézi hogy szabad-e oda helyezni egy autót. Ha nem akkor false, ha igen akkor true
+		public Cord DeepCheck(GameWindow gw)
+		{
+			Cord Checkcord;
+			//megnézi hogy van-e hely minden kocsinak a környéken
+			if (!gw.Check(this))
+			{
+				return null; //ha foglalt akkor jó
+			}
+
+
+			Checkcord = new Cord(this.x, this.y + 1);
+			for (int i = 0; i < 3; i++)
+			{
+				if (gw.Check(Checkcord)) //ha bármely oldal üres akkor jó
+				{
+					return null;
+				}
+				switch (i)
+				{
+					case 0:
+						Checkcord = new Cord(Checkcord.x + 1, Checkcord.y - 1);
+						break;
+					case 1:
+						Checkcord = new Cord(Checkcord.x - 1, Checkcord.y - 1);
+						break;
+					case 2:
+						Checkcord = new Cord(Checkcord.x - 1, Checkcord.y + 1);
+						break;
+				}
+			}
+			return null;
+		}
 
 
 
- 
 
 
 
-    }
 
 
-        
+	}
+
+
+
 }
 
 
