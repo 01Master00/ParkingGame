@@ -8,7 +8,6 @@ namespace ParkingGame
 {
     public class GameArea
     {
-        int Level;
         int Width;
         int Height;
 
@@ -17,9 +16,7 @@ namespace ParkingGame
 
 		public GameArea(int Level)
 		{
-			this.Level = Level;
-
-			switch (level)
+			switch (Level)
 			{
 				case 0:
 					width = 2;
@@ -100,7 +97,6 @@ namespace ParkingGame
 
 
 
-		public int level { get => Level; set => Level = value; }
 		public int width { get => Width; set => Width = value; }
 		public int height { get => Height; set => Height = value; }
 		public double widthFeloszt { get => WidthFeloszt;}

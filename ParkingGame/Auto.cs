@@ -34,14 +34,14 @@ namespace ParkingGame
 
 
 
-        //csekkolja a valid autolpacementet True ha jó, False ha rossz
-        public Cord CheckSurroundings(Auto auto, GameWindow gw)
+        //csekkolja a valid autolpacementet null ha jó, ha nem akkor visszaadja a problémás koordinátát
+        public Cord CheckSurroundings(GameWindow gw)
         {
             Cord CheckCord;
-            int dir = auto.direction;
+            int dir = this.direction;
 
             //orientálódás
-            if (auto.headC.y != auto.tailC.y && auto.headC.x != auto.tailC.x) // nem valid autó, killswich
+            if (this.headC.y != this.tailC.y && this.headC.x != this.tailC.x) // nem valid autó, killswich
             {
                 MessageBox.Show("Nem valid autó, a két koordináta nem egy vonalban van!");
                 return null;
@@ -49,16 +49,16 @@ namespace ParkingGame
             switch (dir)
             {
                 case 0: 
-                    CheckCord = new Cord(auto.headC.x, auto.headC.y + 1);  
+                    CheckCord = new Cord(this.headC.x, this.headC.y + 1);  
                     break;
                 case 1: 
-                    CheckCord = new Cord(auto.headC.x + 1, auto.headC.y); 
+                    CheckCord = new Cord(this.headC.x + 1, this.headC.y); 
                     break;
                 case 2:
-                    CheckCord = new Cord(auto.tailC.x, auto.tailC.y + 1);
+                    CheckCord = new Cord(this.tailC.x, this.tailC.y + 1);
                     break;
                 case 3:
-                    CheckCord = new Cord(auto.tailC.x + 1, auto.tailC.y); 
+                    CheckCord = new Cord(this.tailC.x + 1, this.tailC.y); 
                     break;
                 default:  //csak 4 irány van, ha ez nem stimmel akkor valami nagyon rossz van
                     MessageBox.Show("Nem valid irány");

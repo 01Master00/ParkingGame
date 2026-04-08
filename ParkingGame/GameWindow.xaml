@@ -18,7 +18,7 @@
             <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Background="White" Padding="20">
                 <StackPanel MaxWidth="800" x:Name="LVLselect">
                     <Label x:Name="Error" Content="Pályák" FontSize="80" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
-                    <Canvas x:Name="LevelCanvas" Width="600" Height="600" Background="Transparent">
+                    <Canvas x:Name="LevelCanvas" Width="800" Height="800" Background="Transparent">
 						<Button Content="Lvl 1" Width="150" Height="150" Canvas.Left="20" Canvas.Top="20" FontSize="40" Tag="1" Click="Level_Click"/>
 						<Button Content="Lvl 2" Width="150" Height="150" Canvas.Left="220" Canvas.Top="20" FontSize="40" Tag="2" Click="Level_Click"/>
 						<Button Content="Lvl 3" Width="150" Height="150" Canvas.Left="420" Canvas.Top="20" FontSize="40" Tag="3" Click="Level_Click"/>
