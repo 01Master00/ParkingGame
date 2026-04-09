@@ -25,13 +25,22 @@ namespace ParkingGame
 
 
 
+        public int direction { get => Direction; set => Direction = value; }
         public Button button { get => Button; set => Button = value; }
-
-        public int direction { get => Direction; }
         internal Cord headC { get => HeadC; set => HeadC = value; }
         internal Cord tailC { get => TailC; set => TailC = value; }
 
 
+        //csekkolja önmagát, ha bármelyik koordináta foglalt akkor false, ha mindkettő szabad akkor true
+        public bool CheckSelf(GameWindow gw)
+        {
+            if (!gw.Check(this.headC) || !gw.Check(this.tailC)) //ha a két koordináta közül bármelyik foglalt akkor nem jó
+            {
+                return false;
+            }
+            return true;
+
+        }
 
 
         //csekkolja a valid autolpacementet null ha jó, ha nem akkor visszaadja a problémás koordinátát
@@ -41,7 +50,7 @@ namespace ParkingGame
             int dir = this.direction;
 
             //orientálódás
-            if (this.headC.y != this.tailC.y && this.headC.x != this.tailC.x) // nem valid autó, killswich
+            if (this.headC.y == this.tailC.y && this.headC.x == this.tailC.x) // nem valid autó, killswich
             {
                 MessageBox.Show("Nem valid autó, a két koordináta nem egy vonalban van!");
                 return null;

@@ -13,7 +13,7 @@ namespace ParkingGame
     {
         int X;
         int Y;
-            
+
         public Cord(int x1, int y1)
         {
             X = x1;
@@ -23,39 +23,83 @@ namespace ParkingGame
         public int x { get => X; set => X = value; }
         public int y { get => Y; set => Y = value; }
 
-		//Ez a függvény majd megkapja a játékostól a koordinátákat, és megnézi hogy szabad-e oda helyezni egy autót. Ha nem akkor false, ha igen akkor true
-		public Cord DeepCheck(GameWindow gw)
-		{
-			Cord Checkcord;
-			//megnézi hogy van-e hely minden kocsinak a környéken
-			if (!gw.Check(this))
-			{
-				return null; //ha foglalt akkor jó
-			}
+
+        public List<Cord> GetSurroundingCords(GameWindow gw)
+        {
+            List<Cord> SurroundingCords = new List<Cord>();
+            Cord check = this;
+            for (int i = 0; i <= 3; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        check = new Cord(this.x, this.y + 1);
+                        break;
+                    case 1:
+                        check = new Cord(this.x + 1, this.y);
+                        break;
+                    case 2:
+                        check = new Cord(this.x, this.y - 1);
+                        break;
+                    case 3:
+                        check = new Cord(this.x - 1, this.y);
+                        break;
+                }
+                if (gw.Check(check))
+                {
+                    SurroundingCords.Add(check);
+                }
+
+            }
+            return SurroundingCords;
+        }
 
 
-			Checkcord = new Cord(this.x, this.y + 1);
-			for (int i = 0; i < 3; i++)
-			{
-				if (gw.Check(Checkcord)) //ha bármely oldal üres akkor jó
-				{
-					return null;
-				}
-				switch (i)
-				{
-					case 0:
-						Checkcord = new Cord(Checkcord.x + 1, Checkcord.y - 1);
-						break;
-					case 1:
-						Checkcord = new Cord(Checkcord.x - 1, Checkcord.y - 1);
-						break;
-					case 2:
-						Checkcord = new Cord(Checkcord.x - 1, Checkcord.y + 1);
-						break;
-				}
-			}
-			return null;
-		}
+        public Auto GetCarByCord(GameWindow gw)
+        {
+            foreach (Auto a in gw.autok)
+            {
+                if ((a.headC.x == this.x && a.headC.y == this.y) || (a.tailC.x == this.x && a.tailC.y == this.y))
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+        //Ez a függvény majd megkapja a játékostól a koordinátákat, és megnézi hogy szabad-e oda helyezni egy autót. Ha nem akkor false, ha igen akkor true
+        public Cord DeepCheck(GameWindow gw)
+        {
+            Cord Checkcord;
+            //megnézi hogy van-e hely minden kocsinak a környéken
+            if (!gw.Check(this))
+            {
+                return null; //ha foglalt akkor jó
+            }
+
+
+            Checkcord = new Cord(this.x, this.y + 1);
+            for (int i = 0; i < 3; i++)
+            {
+                if (gw.Check(Checkcord)) //ha bármely oldal üres akkor jó
+                {
+                    return null;
+                }
+                switch (i)
+                {
+                    case 0:
+                        Checkcord = new Cord(Checkcord.x + 1, Checkcord.y - 1);
+                        break;
+                    case 1:
+                        Checkcord = new Cord(Checkcord.x - 1, Checkcord.y - 1);
+                        break;
+                    case 2:
+                        Checkcord = new Cord(Checkcord.x - 1, Checkcord.y + 1);
+                        break;
+                }
+            }
+            return null;
+        }
 
 
 
@@ -64,7 +108,7 @@ namespace ParkingGame
 
 
 
-	}
+    }
 
 
 
