@@ -67,6 +67,11 @@ namespace ParkingGame
                     return;
                 }
             }
+            if (autok.Count == 0) // végtelen loop pls fix
+            {
+                MessageBox.Show("NYERTÉL \n:)");
+                Close();
+            }
         }
 
         private void StartGame()
@@ -79,46 +84,50 @@ namespace ParkingGame
         // true ha lehetetlen esemény false ha lehetséges
         private Auto CheckImpossible(Auto c)
         {
-            Cord check = c.headC;
+            Auto check = null;
 
-            for (int i = 0; i <= 3; i++)
+            switch (c.direction)
             {
-                switch (i)
-                {
-                    case 0:
-                        check = new Cord(c.headC.x, c.headC.y + 1);
-                        break;
-                    case 1:
-                        check = new Cord(c.headC.x + 1, c.headC.y);
-                        break;
-                    case 2:
-                        check = new Cord(c.headC.x, c.headC.y - 1);
-                        break;
-                    case 3:
-                        check = new Cord(c.headC.x - 1, c.headC.y);
-                        break;
-                }
-                Auto GetCar = check.GetCarByCord(this);
-                if (GetCar != null && GetCar != c)
-                {
-                    if (GetCar.direction % 2 == c.direction % 2 && GetCar.direction != c.direction)
+                case 0:
+                    for (int i = c.headC.y; i >= 0; i--)
                     {
-                        if(GetCar.direction%2 == 1)
+                        check = new Cord(c.headC.x, i).GetCarByCord(this);
+                        if (check != null)
                         {
-                            if(GetCar.headC.y == c.headC.y)
-                            {
-                        return GetCar;
-                            }
-                        }
-                        else if (GetCar.direction%2 == 0)
-                        {
-                            if (GetCar.headC.x == c.headC.x)
-                            {
-                                return GetCar;
-                            }
+                            return check;
                         }
                     }
-                }
+                    break;
+                case 1:
+                    for (int i = c.headC.x; i <= ga.width; i++)
+                    {
+                        check = new Cord(c.headC.x, i).GetCarByCord(this);
+                        if (check != null)
+                        {
+                            return check;
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = c.headC.y; i <= ga.height; i++)
+                    {
+                        check = new Cord(c.headC.x, i).GetCarByCord(this);
+                        if (check != null)
+                        {
+                            return check;
+                        }
+                    }
+                    break;
+                case 3:
+                    for (int i = c.headC.x; i >= 0; i--)
+                    {
+                        check = new Cord(c.headC.x, i).GetCarByCord(this);
+                        if (check != null)
+                        {
+                            return check;
+                        }
+                    }
+                    break;
             }
             return null;
         }
@@ -267,14 +276,9 @@ namespace ParkingGame
             Cord finale = auto.CheckSurroundings(this);
             Auto impossible = CheckImpossible(auto);
 
-            if (finale == null && impossible != null)
+            if (finale != null || impossible != null)
             {
-                Cord csere = auto.headC;
-                auto.headC = auto.tailC;
-                auto.tailC = csere;
-                auto.direction = (auto.direction + 2) % 4;
-                auto.button.Content = (auto.direction == 0) ? "^" : (auto.direction == 1) ? ">" : (auto.direction == 2) ? "v" : "<";
-                auto.button.Background = Brushes.Red;
+                return finale;
             }
 
             impossible = CheckImpossible(auto);
