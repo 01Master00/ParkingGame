@@ -92,8 +92,9 @@ namespace ParkingGame
                     for (int i = c.headC.y; i >= 0; i--)
                     {
                         check = new Cord(c.headC.x, i).GetCarByCord(this);
-                        if (check != null)
+                        if (check != null && c.direction%2 == check.direction%2 && c.direction != check.direction)
                         {
+                            MessageBox.Show($"0, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
                             return check;
                         }
                     }
@@ -101,9 +102,11 @@ namespace ParkingGame
                 case 1:
                     for (int i = c.headC.x; i <= ga.width; i++)
                     {
-                        check = new Cord(c.headC.x, i).GetCarByCord(this);
-                        if (check != null)
+                        check = new Cord(i, c.headC.y).GetCarByCord(this);
+                        if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
+                            MessageBox.Show($"1, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
+
                             return check;
                         }
                     }
@@ -112,8 +115,10 @@ namespace ParkingGame
                     for (int i = c.headC.y; i <= ga.height; i++)
                     {
                         check = new Cord(c.headC.x, i).GetCarByCord(this);
-                        if (check != null)
+                        if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
+                            MessageBox.Show($"2, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
+
                             return check;
                         }
                     }
@@ -121,9 +126,11 @@ namespace ParkingGame
                 case 3:
                     for (int i = c.headC.x; i >= 0; i--)
                     {
-                        check = new Cord(c.headC.x, i).GetCarByCord(this);
-                        if (check != null)
+                        check = new Cord(i, c.headC.y).GetCarByCord(this);
+                        if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
+                            MessageBox.Show($"3, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
+
                             return check;
                         }
                     }
@@ -134,7 +141,7 @@ namespace ParkingGame
 
         private async Task GenerateLayout()
         {
-            await Task.Delay(200); // Ez biztosítja, hogy a UI frissüljön minden egyes autó elhelyezése után, így láthatod a generálás folyamatát.
+            await Task.Delay(100); // Ez biztosítja, hogy a UI frissüljön minden egyes autó elhelyezése után, így láthatod a generálás folyamatát.
             if (ga.width * ga.height / 2 == autok.Count)
             {
                 MessageBox.Show("Sikeres pálya generálás!");
@@ -145,7 +152,7 @@ namespace ParkingGame
             do
             {
                 ErrorCount++;
-                if (ErrorCount > ga.level * 100)
+                if (ErrorCount > ga.level * 60)
                 {
                     MessageBox.Show("'Sikertelen' pálya generálás, túl sok hibás próbálkozás.");
                     return;

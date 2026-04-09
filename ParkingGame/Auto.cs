@@ -76,7 +76,7 @@ namespace ParkingGame
 
             for (int i = 0; i < 5; i++) //i: (-1)-irány és óra járásnak megfelelően halad
             {
-                if (CheckCord.DeepCheck(gw) != null) return CheckCord.DeepCheck(gw); //megnézi hogy van-e hely minden kocsinak a környéken
+                //if (CheckCord.DeepCheck(gw) != null) return CheckCord.DeepCheck(gw); //megnézi hogy van-e hely minden kocsinak a környéken
                 if (dir % 2 == 0) // vertikális autó
                 {
                     switch (i) // Checkcords-on relatív kordináták segítségével végiglépkedek, és megnézem hogy van-e ott autó, vagy pályán kívül van-e
