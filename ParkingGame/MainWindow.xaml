@@ -19,27 +19,31 @@
                     FontSize="20" Background="LightGray" FontWeight="Bold" Click="PlayClick"/>
                     <Button Canvas.Left="570" Canvas.Top="350" Width="160" Height="30" Content="Credits"
                     FontSize="20" Background="LightGray" FontWeight="Bold" Click="Credits_Click"/>
-					<Button Canvas.Left="570" Canvas.Top="400" Width="160" Height="30" Content="Exit"
+                    <Button Canvas.Left="570" Canvas.Top="400" Width="160" Height="30" Content="Exit"
                     FontSize="20" Background="Red" FontWeight="Bold" Click="Exit_Click"/>
-				</Canvas>
+                </Canvas>
             </Viewbox>
         </Grid>
         <Grid x:Name="Credits" Visibility="Collapsed" Background="AliceBlue">
-            <Canvas x:Name="CreditsCanvas" Width="800" Height="300" Background="Transparent">
-                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
-               Canvas.Left="50" Canvas.Top="20"/>
-                <TextBlock Text="Berki" FontSize="24"
-               Canvas.Left="100" Canvas.Top="180"/>
-                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
-               Canvas.Left="325" Canvas.Top="20"/>
-                <TextBlock Text="Kramer" FontSize="24"
-               Canvas.Left="365" Canvas.Top="180"/>
-                <Rectangle Width="150" Height="150" Fill="#CCCCCC" RadiusX="20" RadiusY="20"
-               Canvas.Left="600" Canvas.Top="20"/>
-                <TextBlock Text="Farkas" FontSize="24"
-               Canvas.Left="645" Canvas.Top="180"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Canvas x:Name="CreditsCanvas" Grid.Column="0" Background="Transparent" ClipToBounds="True" Loaded="CreditsCanvas_Loaded">
+                <StackPanel x:Name="CreditsList">
+                    <TextBlock Text="CREDITS" FontSize="45" Margin="10" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Lucida Console" Foreground="ForestGreen"/>
+                    <TextBlock Text="Készítették:" FontSize="38" Margin="10" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Lucida Console" Foreground="ForestGreen"/>
+                    <TextBlock Text="Berki Bálint" FontSize="35" Margin="10"/>
+                    <TextBlock Text="Kramer Bálint" FontSize="35" Margin="10"/>
+                    <TextBlock Text="Farkas Róbert" FontSize="35" Margin="10"/>
+                </StackPanel>
             </Canvas>
-            <Button Content="Vissza" Click="BackButton_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
+            <Grid Grid.Column="1" Background="Black">
+                <Canvas x:Name="DvdCanvas">
+                    <TextBlock x:Name="DvdText" Text="low budget DVD logó" FontSize="60" FontWeight="Bold" Foreground="ForestGreen"/>
+                </Canvas>
+                <Button Content="Vissza" Click="BackButton_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Width="200" Background="Red" FontWeight="ExtraBold"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
