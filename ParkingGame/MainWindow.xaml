@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="300"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Canvas x:Name="CreditsCanvas" Grid.Column="0" Background="Transparent" ClipToBounds="True" Loaded="CreditsCanvas_Loaded">
+            <Canvas x:Name="CreditsCanvas" Grid.Column="0" Background="Transparent" ClipToBounds="True">
                 <StackPanel x:Name="CreditsList">
                     <TextBlock Text="CREDITS" FontSize="45" Margin="10" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Lucida Console" Foreground="ForestGreen"/>
                     <TextBlock Text="Készítették:" FontSize="38" Margin="10" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Lucida Console" Foreground="ForestGreen"/>
@@ -40,7 +40,9 @@
             </Canvas>
             <Grid Grid.Column="1" Background="Black">
                 <Canvas x:Name="DvdCanvas">
-                    <TextBlock x:Name="DvdText" Text="low budget DVD logó" FontSize="60" FontWeight="Bold" Foreground="ForestGreen"/>
+                    <Image x:Name="Logo1" Source="/Resources/berki.png" Width="150"/>
+                    <Image x:Name="Logo2" Source="/Resources/kramer.png" Width="150"/>
+                    <Image x:Name="Logo3" Source="/Resources/robi.png" Width="150"/>
                 </Canvas>
                 <Button Content="Vissza" Click="BackButton_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20" Width="200" Background="Red" FontWeight="ExtraBold"/>
             </Grid>
