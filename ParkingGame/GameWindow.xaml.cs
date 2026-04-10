@@ -75,7 +75,10 @@ namespace ParkingGame
             if (autok.Count == 0)
             {
                 MessageBox.Show("NYERTÉL \n:)");
-                Close();
+                HighlightCompletedLevel(ga.level);
+                Game.Children.Clear();
+                autok.Clear();
+                LVLselect.Visibility = Visibility.Visible;
             }
         }
 
@@ -154,6 +157,9 @@ namespace ParkingGame
                 if (ErrorCount > ga.level * 60)
                 {
                     MessageBox.Show("'Sikertelen' pálya generálás, túl sok hibás próbálkozás.");
+                    Game.Children.Clear();
+                    autok.Clear();
+                    LVLselect.Visibility = Visibility.Visible;
                     return;
                 }
                 x = rand.Next(0, ga.width);
@@ -349,5 +355,21 @@ namespace ParkingGame
             LVLselect.Visibility = Visibility.Collapsed;
             StartGame();
         }
+
+        private void HighlightCompletedLevel(int level)
+        {
+            foreach (var child in LevelCanvas.Children)
+            {
+                if (child is Button b && b.Tag != null)
+                {
+                    if (b.Tag.ToString() == level.ToString())
+                    {
+                        b.Background = Brushes.LightGreen;
+                        b.Foreground = Brushes.White;
+                    }
+                }
+            }
+        }
+
     }
 }

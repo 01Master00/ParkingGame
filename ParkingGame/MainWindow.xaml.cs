@@ -94,7 +94,7 @@ namespace ParkingGame
             Canvas.SetTop(Logo3, 100);
 
             dvdTimer = new DispatcherTimer();
-            dvdTimer.Interval = TimeSpan.FromMilliseconds(8);
+            dvdTimer.Interval = TimeSpan.FromMilliseconds(12);
             dvdTimer.Tick += DvdTimer_Tick;
             dvdTimer.Start();
         }
