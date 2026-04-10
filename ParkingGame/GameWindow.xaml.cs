@@ -55,24 +55,19 @@ namespace ParkingGame
             }
         }
 
-        public void RemoveCar(object sender, RoutedEventArgs e)
+        public void RemoveCar(object sender, RoutedEventArgs e) // Fix: Change parameter type to match RoutedEventHandler
         {
             Button b = sender as Button;
             Game.Children.Remove(b);
-            Auto toRemove = null;
             foreach (Auto auto in autok)
             {
                 if (auto.button == b)
                 {
-                    toRemove = auto;
-                    break;
+                    autok.Remove(auto);
+                    return;
                 }
             }
-            if (toRemove != null)
-            {
-                autok.Remove(toRemove);
-            }
-            if (autok.Count == 0)
+            if (autok.Count == 0) // végtelen loop pls fix
             {
                 MessageBox.Show("NYERTÉL \n:)");
                 Close();
@@ -270,8 +265,16 @@ namespace ParkingGame
             }
 
             car.Click += new RoutedEventHandler(RemoveCar);
-            /*Game.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(RemoveCar));*/
-            Auto auto = new Auto(car, ori, TopLeft, ForceCords);
+            Game.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(RemoveCar));
+            return new Auto(car, ori, TopLeft, ForceCords);
+        }
+
+        private Cord PlaceCar(Auto auto)
+        {
+            if (auto == null)
+            {
+                return null;
+            }
             if (!auto.CheckSelf(this))
             {
                 return null; //megnézi szabad-e a hely
