@@ -97,9 +97,8 @@ namespace ParkingGame
                     for (int i = c.headC.y; i >= 0; i--)
                     {
                         check = new Cord(c.headC.x, i).GetCarByCord(this);
-                        if (check != null && c.direction%2 == check.direction%2 && c.direction != check.direction)
+                        if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
-                            MessageBox.Show($"0, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
                             return check;
                         }
                     }
@@ -110,8 +109,6 @@ namespace ParkingGame
                         check = new Cord(i, c.headC.y).GetCarByCord(this);
                         if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
-                            MessageBox.Show($"1, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
-
                             return check;
                         }
                     }
@@ -122,8 +119,6 @@ namespace ParkingGame
                         check = new Cord(c.headC.x, i).GetCarByCord(this);
                         if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
-                            MessageBox.Show($"2, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
-
                             return check;
                         }
                     }
@@ -134,8 +129,6 @@ namespace ParkingGame
                         check = new Cord(i, c.headC.y).GetCarByCord(this);
                         if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
-                            MessageBox.Show($"3, talált autó: {check.direction}, ({check.headC.x}, {check.headC.y})");
-
                             return check;
                         }
                     }
@@ -146,7 +139,7 @@ namespace ParkingGame
 
         private async Task GenerateLayout()
         {
-            await Task.Delay(100); // Ez biztosítja, hogy a UI frissüljön minden egyes autó elhelyezése után, így láthatod a generálás folyamatát.
+            await Task.Delay(50); // Ez biztosítja, hogy a UI frissüljön minden egyes autó elhelyezése után, így láthatod a generálás folyamatát.
             if (ga.width * ga.height / 2 == autok.Count)
             {
                 MessageBox.Show("Sikeres pálya generálás!");
@@ -167,14 +160,14 @@ namespace ParkingGame
                 ori = rand.Next(0, 4);
             } while (!Check(new Cord(x, y)));
 
-            Cord c = PlaceCar(x, y, ori);
+            Cord c = PlaceCar(GenerateCar(new Cord(x, y), ori));
             if (c == null)
             {
                 GenerateLayout();
             }
             else
             {
-                c = PlaceCar(x, y, ori, c);
+                c = PlaceCar(GenerateCar(c, ori));
                 if (c == null)
                 {
                     GenerateLayout();
@@ -187,34 +180,32 @@ namespace ParkingGame
             }
         }
 
-        private Cord PlaceCar(int x, int y, int ori, Cord ForceCords = null)
-        {
-            double width = Game.ActualWidth;
-            double height = Game.ActualHeight;
 
-            Cord TopLeft = new Cord(x, y);
+        private Auto GenerateCar(Cord TopLeft, int ori)
+        {
+            Cord ForceCords = new Cord(-1, -1);
             Button car = new Button();
             List<Cord> surr = TopLeft.GetSurroundingCords(this);
-            if (surr.Count == 0)
+            if (surr == null)
             {
                 return null; //ha nincs körül szabad hely akkor nem jó
             }
             else if (surr.Count == 1)
             {
                 ForceCords = surr[0];
-                if (ForceCords.y > y)
+                if (ForceCords.y > TopLeft.y)
                 {
                     ori = 2;
                 }
-                else if (ForceCords.y < y)
+                else if (ForceCords.y < TopLeft.y)
                 {
                     ori = 0;
                 }
-                else if (ForceCords.x > x)
+                else if (ForceCords.x > TopLeft.x)
                 {
                     ori = 3;
                 }
-                else if (ForceCords.x < x)
+                else if (ForceCords.x < TopLeft.x)
                 {
                     ori = 1;
                 }
@@ -231,10 +222,10 @@ namespace ParkingGame
                 bool s = false;
                 Dictionary<int, Cord> dirToCord = new Dictionary<int, Cord>
                 {
-                    { 0, new Cord(x, y - 1) },
-                    { 1, new Cord(x - 1, y) },
-                    { 2, new Cord(x, y + 1) },
-                    { 3, new Cord(x + 1, y) }
+                    { 0, new Cord(TopLeft.x, TopLeft.y - 1) },
+                    { 1, new Cord(TopLeft.x - 1, TopLeft.y) },
+                    { 2, new Cord(TopLeft.x, TopLeft.y + 1) },
+                    { 3, new Cord(TopLeft.x + 1, TopLeft.y) }
                 };
                 foreach (var kvp in dirToCord)
                 {
@@ -251,19 +242,19 @@ namespace ParkingGame
                 {
                     Random rand = new Random();
                     ForceCords = surr[rand.Next(0, surr.Count)];
-                    if (ForceCords.y > y)
+                    if (ForceCords.y > TopLeft.y)
                     {
                         ori = 2;
                     }
-                    else if (ForceCords.y < y)
+                    else if (ForceCords.y < TopLeft.y)
                     {
                         ori = 0;
                     }
-                    else if (ForceCords.x > x)
+                    else if (ForceCords.x > TopLeft.x)
                     {
                         ori = 3;
                     }
-                    else if (ForceCords.x < x)
+                    else if (ForceCords.x < TopLeft.x)
                     {
                         ori = 1;
                     }
@@ -285,36 +276,38 @@ namespace ParkingGame
             {
                 return null; //megnézi szabad-e a hely
             }
-            Cord finale = auto.CheckSurroundings(this);
             Auto impossible = CheckImpossible(auto);
-
+            //Cord finale = auto.CheckSurroundings(this);
+            /*
             if (finale != null || impossible != null)
             {
                 return finale;
             }
-
+            */
             impossible = CheckImpossible(auto);
-            finale = auto.CheckSurroundings(this);
-            if (finale == null && impossible == null)
+            //finale = auto.CheckSurroundings(this);
+            if (impossible == null)
             {
-                if (ForceCords.y > y || ForceCords.x > x)
+                if (auto.tailC.y > auto.headC.y || auto.tailC.x > auto.headC.x)
                 {
-                    Canvas.SetLeft(car, x * ga.widthFeloszt);
-                    Canvas.SetTop(car, y * ga.heightFeloszt);
+                    Canvas.SetLeft(auto.button, auto.headC.x * ga.widthFeloszt);
+                    Canvas.SetTop(auto.button, auto.headC.y * ga.heightFeloszt);
                 }
-                else if (ForceCords.y < y || ForceCords.x < x)
+                else if (auto.tailC.y < auto.headC.y || auto.tailC.x < auto.headC.x)
                 {
-                    Canvas.SetLeft(car, ForceCords.x * ga.widthFeloszt);
-                    Canvas.SetTop(car, ForceCords.y * ga.heightFeloszt);
+                    Canvas.SetLeft(auto.button, auto.tailC.x * ga.widthFeloszt);
+                    Canvas.SetTop(auto.button, auto.tailC.y * ga.heightFeloszt);
                 }
-                Game.Children.Add(car);
+                Game.Children.Add(auto.button);
                 autok.Add(auto);
-                return null;
             }
+            return null;
+            /*
             else
             {
                 return finale;
             }
+            */
         }
 
         // ha üres true ha foglalt false

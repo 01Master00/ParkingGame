@@ -23,7 +23,7 @@ namespace ParkingGame
         public int x { get => X; set => X = value; }
         public int y { get => Y; set => Y = value; }
 
-
+        //megnézi mely kordináták szabadok a környéken és visszaadja a listájukat
         public List<Cord> GetSurroundingCords(GameWindow gw)
         {
             List<Cord> SurroundingCords = new List<Cord>();
@@ -51,7 +51,7 @@ namespace ParkingGame
                 }
 
             }
-            return SurroundingCords;
+            return SurroundingCords.Count == 0 ? null : SurroundingCords;
         }
 
 
@@ -66,48 +66,26 @@ namespace ParkingGame
             }
             return null;
         }
-
+        /*
         //Ez a függvény majd megkapja a játékostól a koordinátákat, és megnézi hogy szabad-e oda helyezni egy autót. Ha nem akkor false, ha igen akkor true
+        //megnézi hogy van-e hely minden kocsinak a környéken
         public Cord DeepCheck(GameWindow gw)
         {
-            Cord Checkcord;
-            //megnézi hogy van-e hely minden kocsinak a környéken
             if (!gw.Check(this))
             {
                 return null; //ha foglalt akkor jó
             }
 
-
-            Checkcord = new Cord(this.x, this.y + 1);
-            for (int i = 0; i < 3; i++)
+            List<Cord> check = this.GetSurroundingCords(gw);
+            if (check == null)
             {
-                if (gw.Check(Checkcord)) //ha bármely oldal üres akkor jó
-                {
-                    return null;
-                }
-                switch (i)
-                {
-                    case 0:
-                        Checkcord = new Cord(Checkcord.x + 1, Checkcord.y - 1);
-                        break;
-                    case 1:
-                        Checkcord = new Cord(Checkcord.x - 1, Checkcord.y - 1);
-                        break;
-                    case 2:
-                        Checkcord = new Cord(Checkcord.x - 1, Checkcord.y + 1);
-                        break;
-                }
+                MessageBox.Show("Nincs hely a környéken, nem helyezhető el autó ide");
+                return this;
             }
+
             return null;
         }
-
-
-
-
-
-
-
-
+        */
     }
 
 
