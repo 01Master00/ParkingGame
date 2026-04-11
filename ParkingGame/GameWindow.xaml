@@ -16,7 +16,7 @@
         
         <Grid x:Name="question" HorizontalAlignment="Center" VerticalAlignment="Top" Background="LightGray">
             <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Background="White" Padding="20">
-                <StackPanel MaxWidth="800" x:Name="LVLselect">
+                <StackPanel MaxWidth="800" x:Name="LVLselect" Loaded="LVLselect_Loaded">
                     <Label x:Name="Error" Content="Pályák" FontSize="80" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
                     <Canvas x:Name="LevelCanvas" Width="800" Height="800" Background="Transparent">
 						<Button Content="Lvl 1" Width="150" Height="150" Canvas.Left="20" Canvas.Top="20" FontSize="40" Tag="1" Click="Level_Click"/>
@@ -35,6 +35,7 @@
             </Border>
 
         </Grid>
+        <Button Content="Save törlése" Click="DeleteSave_Click" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
         <Button Content="Vissza" Click="Back_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
     </Grid>
 </Window>

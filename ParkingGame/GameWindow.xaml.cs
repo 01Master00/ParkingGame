@@ -358,6 +358,7 @@ namespace ParkingGame
 
         private void HighlightCompletedLevel(int level)
         {
+            SaveManager.SaveCompletedLevel(level);
             foreach (var child in LevelCanvas.Children)
             {
                 if (child is Button b && b.Tag != null)
@@ -367,6 +368,37 @@ namespace ParkingGame
                         b.Background = Brushes.LightGreen;
                         b.Foreground = Brushes.White;
                     }
+                }
+            }
+        }
+
+        private void LVLselect_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<int> completed = SaveManager.LoadCompletedLevels();
+
+            foreach (var child in LevelCanvas.Children)
+            {
+                if (child is Button b && b.Tag != null)
+                {
+                    int level = Convert.ToInt32(b.Tag);
+                    if (completed.Contains(level))
+                    {
+                        b.Background = Brushes.LightGreen;
+                        b.Foreground = Brushes.White;
+                    }
+                }
+            }
+        }
+
+        private void DeleteSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveManager.DeleteSave();
+            foreach (var child in LevelCanvas.Children)
+            {
+                if (child is Button b && b.Tag != null)
+                {
+                    b.Background = Brushes.LightGray;
+                    b.Foreground = Brushes.Black;
                 }
             }
         }
