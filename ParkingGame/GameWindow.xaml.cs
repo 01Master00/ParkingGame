@@ -157,9 +157,6 @@ namespace ParkingGame
                 if (ErrorCount > ga.level * 60)
                 {
                     MessageBox.Show("'Sikertelen' pálya generálás, túl sok hibás próbálkozás.");
-                    Game.Children.Clear();
-                    autok.Clear();
-                    LVLselect.Visibility = Visibility.Visible;
                     return;
                 }
                 x = rand.Next(0, ga.width);
