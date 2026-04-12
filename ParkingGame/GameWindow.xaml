@@ -32,7 +32,6 @@
 						<Button Content="Lvl 9" Width="150" Height="150" Canvas.Left="20" Canvas.Top="420" FontSize="40" Tag="9" Click="Level_Click"/>
 						<Button Content="Lvl 10" Width="150" Height="150" Canvas.Left="220" Canvas.Top="420" FontSize="40" Tag="10" Click="Level_Click"/>
                         <Button Content="Lvl 11" Width="150" Height="150" Canvas.Left="420" Canvas.Top="420" FontSize="40"  Click="Level_Click" Tag="11"/>
-                        <Button Content="Lvl 12" Width="150" Height="150" Canvas.Left="620" Canvas.Top="420" FontSize="40"  Click="Level_Click" Tag="12"/>
                         <Button x:Name="mysteryButton" Content="?" Width="150" Height="150" Canvas.Left="620" Canvas.Top="420" FontSize="100" Click="Mystery_Click" Foreground="WhiteSmoke" Background="yellow" BorderThickness="5" BorderBrush="Black"/>
 
                     </Canvas>
