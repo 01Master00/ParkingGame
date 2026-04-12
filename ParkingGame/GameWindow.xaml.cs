@@ -482,15 +482,14 @@ namespace ParkingGame
         private void HighlightCompletedLevel(int level)
         {
             SaveManager.SaveCompletedLevel(level);
+            myPoints.Text = $"Pontjaid: {SaveManager.LoadPoints()}";
+
             foreach (var child in LevelCanvas.Children)
             {
-                if (child is Button b && b.Tag != null)
+                if (child is Button b && b.Tag != null && b.Tag.ToString() == level.ToString())
                 {
-                    if (b.Tag.ToString() == level.ToString())
-                    {
-                        b.Background = Brushes.LightGreen;
-                        b.Foreground = Brushes.White;
-                    }
+                    b.Background = Brushes.LightGreen;
+                    b.Foreground = Brushes.White;
                 }
             }
         }
@@ -498,6 +497,7 @@ namespace ParkingGame
         private void LVLselect_Loaded(object sender, RoutedEventArgs e)
         {
             List<int> completed = SaveManager.LoadCompletedLevels();
+            myPoints.Text = $"Pontjaid: {SaveManager.LoadPoints()}";
 
             foreach (var child in LevelCanvas.Children)
             {
@@ -516,6 +516,8 @@ namespace ParkingGame
         private void DeleteSave_Click(object sender, RoutedEventArgs e)
         {
             SaveManager.DeleteSave();
+            myPoints.Text = "Pontjaid: 0";
+
             foreach (var child in LevelCanvas.Children)
             {
                 if (child is Button b && b.Tag != null)
@@ -524,6 +526,18 @@ namespace ParkingGame
                     b.Foreground = Brushes.Black;
                 }
             }
+        }
+        private void Mystery_Click(object sender, RoutedEventArgs e)
+        {
+            int points = SaveManager.LoadPoints();
+
+            if (points < 1000)
+            {
+                MessageBox.Show($"A pálya feloldásához 1000 pont kell, de neked nincs ennyid");
+                return;
+            }
+            SaveManager.SpendPoints(1000);
+            myPoints.Text = $"Pontjaid: {SaveManager.LoadPoints()}";
         }
 
     }
