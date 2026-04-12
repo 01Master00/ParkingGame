@@ -42,5 +42,9 @@
         </Grid>
         <Button Content="Save törlése" Click="DeleteSave_Click" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
         <Button Content="Vissza" Click="Back_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
+        <Grid x:Name="CarHitter" Visibility="Collapsed" Background="Gray">
+            <UniformGrid x:Name="CarHitterGrid" Rows="3" Columns="3" Margin="50"/>
+        </Grid>
+
     </Grid>
 </Window>

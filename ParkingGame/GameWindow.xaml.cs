@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ParkingGame
 {
@@ -531,13 +532,79 @@ namespace ParkingGame
         {
             int points = SaveManager.LoadPoints();
 
-            if (points < 1000)
+            if (points < 5000)
             {
-                MessageBox.Show($"A pálya feloldásához 1000 pont kell, de neked nincs ennyid");
+                MessageBox.Show($"A pálya feloldásához 5000 pont kell, de neked nincs ennyid");
                 return;
             }
-            SaveManager.SpendPoints(1000);
+            SaveManager.SpendPoints(5000);
             myPoints.Text = $"Pontjaid: {SaveManager.LoadPoints()}";
+            MessageBox.Show("Üsd az autót, ahol látod");
+            StartCarHitter();
+        }
+
+        DispatcherTimer carTimer;
+        Random rnd = new Random();
+        Button activeCar = null;
+        int carScore = 0;
+        int carTimeLeft = 20;
+
+        private void StartCarHitter()
+        {
+            CarHitter.Visibility = Visibility.Visible;
+            CarHitterGrid.Children.Clear();
+            carScore = 0;
+            carTimeLeft = 20;
+            for (int i = 0; i < 9; i++)
+            {
+                Button b = new Button()
+                {
+                    Background = Brushes.DarkGray,
+                    FontSize = 30,
+                    Tag = "empty"
+                };
+                b.Click += CarHitterClick;
+                CarHitterGrid.Children.Add(b);
+            }
+            carTimer = new DispatcherTimer();
+            carTimer.Interval = TimeSpan.FromMilliseconds(700);
+            carTimer.Tick += CarTick;
+            carTimer.Start();
+        }
+        private void CarTick(object sender, EventArgs e)
+        {
+            carTimeLeft--;
+            if (carTimeLeft <= 0)
+            {
+                carTimer.Stop();
+                MessageBox.Show($"Vége, ennyi autot találtál el: {carScore}");
+                CarHitter.Visibility = Visibility.Collapsed;
+                LVLselect.Visibility = Visibility.Visible;
+                return;
+            }
+            if (activeCar != null)
+            {
+                activeCar.Content = "";
+                activeCar.Background = Brushes.DarkGray;
+                activeCar.Tag = "empty";
+            }
+            int index = rnd.Next(0, 9);
+            activeCar = CarHitterGrid.Children[index] as Button;
+            activeCar.Content = "🚗";
+            activeCar.Background = Brushes.Yellow;
+            activeCar.Tag = "car";
+        }
+        private void CarHitterClick(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+
+            if (b.Tag.ToString() == "car")
+            {
+                carScore++;
+                b.Content = "";
+                b.Background = Brushes.DarkGray;
+                b.Tag = "empty";
+            }
         }
 
     }
