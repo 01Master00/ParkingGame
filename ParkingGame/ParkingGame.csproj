@@ -9,11 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\berki.png" />
     <None Remove="Resources\carbg.png" />
+    <None Remove="Resources\kramer.png" />
+    <None Remove="Resources\music.mp3" />
+    <None Remove="Resources\placeholderbg.png" />
+    <None Remove="Resources\robi.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\berki.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\kramer.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\music.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\carbg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\placeholderbg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\robi.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

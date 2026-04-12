@@ -9,18 +9,36 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="GameWindow" Height="900" Width="1000">
-	<Grid>
-		<Grid x:Name="Game" Width="800" Height="800" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<StackPanel Width="800" Height="800" x:Name="question">
-				<Label x:Name="Error" Content="Adja meg mekkora legyen a pálya" FontSize="50"/>
-				<Label x:Name="GlabelWidth" Content="Adja meg a pálya széleségét ami jelenleg 4" FontSize="20"/>
-				<Slider x:Name="Gwidth" Width="800" VerticalAlignment="Bottom" Minimum="4" Maximum="9" ValueChanged="Gwidth_ValueChanged"/>
-				<Label x:Name="GlabelHeight" Content="Adja meg a pálya magasságát ami jelenleg 4" FontSize="20"/>
-				<Slider x:Name="Gheight" Width="800" VerticalAlignment="Bottom" Maximum="9" Minimum="4" ValueChanged="Gheight_ValueChanged" />
-				<Button Content="Start" Click="StartGame"/>
-				
-			</StackPanel>
 
-		</Grid>
-	</Grid>
+    <Grid>
+        <Image Source="/Resources/placeholderbg.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Canvas x:Name="Game" MinWidth="800" MinHeight="800" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        <Grid x:Name="question" HorizontalAlignment="Center" VerticalAlignment="Top" Background="LightSlateGray">
+            
+            <Border BorderBrush="Black" BorderThickness="5" CornerRadius="20" Background="White" Padding="20">
+                <StackPanel MaxWidth="800" x:Name="LVLselect" Loaded="LVLselect_Loaded">
+                    <Label x:Name="Error" Content="Pályák" FontSize="80" HorizontalAlignment="Center" FontWeight="ExtraBold"/>
+                    <TextBlock x:Name="myPoints" Text="Pontjaid: 0" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    <Canvas x:Name="LevelCanvas" Width="800" Height="800" Background="Transparent">
+						<Button Content="Lvl 1" Width="150" Height="150" Canvas.Left="20" Canvas.Top="20" FontSize="40" Tag="1" Click="Level_Click"/>
+						<Button Content="Lvl 2" Width="150" Height="150" Canvas.Left="220" Canvas.Top="20" FontSize="40" Tag="2" Click="Level_Click"/>
+						<Button Content="Lvl 3" Width="150" Height="150" Canvas.Left="420" Canvas.Top="20" FontSize="40" Tag="3" Click="Level_Click"/>
+						<Button Content="Lvl 4" Width="150" Height="150" Canvas.Left="20" Canvas.Top="220" FontSize="40" Tag="4" Click="Level_Click"/>
+						<Button Content="Lvl 5" Width="150" Height="150" Canvas.Left="220" Canvas.Top="220" FontSize="40" Tag="5" Click="Level_Click"/>
+						<Button Content="Lvl 6" Width="150" Height="150" Canvas.Left="420" Canvas.Top="220" FontSize="40" Tag="6" Click="Level_Click"/>
+						<Button Content="Lvl 7" Width="150" Height="150" Canvas.Left="20" Canvas.Top="420" FontSize="40" Tag="7" Click="Level_Click"/>
+						<Button Content="Lvl 8" Width="150" Height="150" Canvas.Left="220" Canvas.Top="420" FontSize="40" Tag="8" Click="Level_Click"/>
+						<Button Content="Lvl 9" Width="150" Height="150" Canvas.Left="420" Canvas.Top="420" FontSize="40"  Click="Level_Click" Tag="9"/>
+                        <Button x:Name="mysteryButton" Content="?" Width="150" Height="150" Canvas.Left="620" Canvas.Top="420" FontSize="100" Click="Mystery_Click" Foreground="WhiteSmoke" Background="yellow" BorderThickness="5" BorderBrush="Black"/>
+
+                    </Canvas>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+        <Button Content="Save törlése" Click="DeleteSave_Click" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
+        <Button Content="Vissza" Click="Back_Click" FontSize="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0" Width="300" Background="red" FontWeight="ExtraBold"/>
+    </Grid>
 </Window>
