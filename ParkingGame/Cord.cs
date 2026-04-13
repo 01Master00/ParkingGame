@@ -61,7 +61,10 @@ namespace ParkingGame
             {
                 if ((a.headC.x == this.x && a.headC.y == this.y) || (a.tailC.x == this.x && a.tailC.y == this.y))
                 {
-                    return a;
+                    if (a.headC != this || a.tailC != this)
+                    {
+                        return a;
+                    }
                 }
             }
             return null;
@@ -86,10 +89,15 @@ namespace ParkingGame
             return null;
         }
         */
+
+        override public string ToString()
+        {
+            return "X: " + this.x + " Y: " + this.y;
+        }
+
+
+
     }
-
-
-
 }
 
 

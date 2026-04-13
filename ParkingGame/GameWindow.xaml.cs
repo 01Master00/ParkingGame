@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkingGame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -107,8 +108,8 @@ namespace ParkingGame
                     break;
                 case 1:
 
-                    if (Check(new Cord(autok[index].headC.x+1, autok[index].headC.y ), autok[index]) &&
-                        Check(new Cord(autok[index].tailC.x+1, autok[index].tailC.y ), autok[index]))
+                    if (Check(new Cord(autok[index].headC.x + 1, autok[index].headC.y), autok[index]) &&
+                        Check(new Cord(autok[index].tailC.x + 1, autok[index].tailC.y), autok[index]))
                     {
                         Game.Children.Remove(autok[index].button);
                         autok[index].headC.x += 1;
@@ -144,17 +145,25 @@ namespace ParkingGame
                     break;
             }
 
+            Auto car = CheckImpossible2(autok[index]);
+            if (car != null)
+            {
+                MessageBox.Show("Lehetetlent találtál, Sorry");
+                Game.Children.Remove(autok[index].button);
+                autok.RemoveAt(index);
+                PlaceAllCars();
+                return;
+            }
 
             MessageBox.Show("Nem lehet ezt az autót megmozdítani, próbálj egy másikat!");
-
 
         }
 
         public void PlaceAllCars()
         {
-            Game.Children.Clear();
             foreach (Auto auto in autok)
             {
+                Game.Children.Remove(auto.button);
 
                 if (auto.tailC.y > auto.headC.y || auto.tailC.x > auto.headC.x)
                 {
@@ -176,10 +185,106 @@ namespace ParkingGame
             GenerateLayout();
         }
 
+        private Auto CheckImpossible2(Auto original)
+        {
+            Auto check = original;
+            Auto newCar = null;
+            Auto gratis = original;
+            for (int i = 0; i < autok.Count + 7; i++)
+            {
+                if (check == null)
+                {
+                    return null;
+                }
+                if (i % 6 == 0)
+                {
+                    gratis = check;
+                }
+                switch (check.direction)
+                {
+                    case 0:
+                        for (int j = check.headC.y; j >= 0; j--)
+                        {
+                            if (newCar != null)
+                            {
+                                newCar = new Cord(check.headC.x, j).GetCarByCord(this);
+                                if (newCar == original)
+                                {
+                                    return original;
+                                }
+                                else if (newCar == gratis && gratis != null)
+                                {
+                                    return gratis;
+                                }
+                            }
+                        }
+                        break;
+                    case 1:
+                        for (int j = check.headC.x; j <= ga.width; j++)
+                        {
+                            if (newCar != null)
+                            {
+                                newCar = new Cord(j, check.headC.y).GetCarByCord(this);
+                                if (newCar == original)
+                                {
+                                    return original;
+                                }
+                                else if (newCar == gratis && gratis != null)
+                                {
+                                    return gratis;
+                                }
+                            }
+                        }
+                        break;
+                    case 2:
+                        for (int j = check.headC.y; j <= ga.height; j++)
+                        {
+                            if (newCar != null)
+                            {
+                                newCar = new Cord(check.headC.x, j).GetCarByCord(this);
+                                if (newCar == original)
+                                {
+                                    return original;
+                                }
+                                else if (newCar == gratis && gratis != null)
+                                {
+                                    return gratis;
+                                }
+                            }
+                        }
+                        break;
+                    case 3:
+                        for (int j = check.headC.x; j >= 0; j--)
+                        {
+                            if (newCar != null)
+                            {
+                                newCar = new Cord(j, check.headC.y).GetCarByCord(this);
+                                if (newCar == original)
+                                {
+                                    return original;
+                                }
+                                else if (newCar == gratis && gratis != null)
+                                {
+                                    return gratis;
+                                }
+                            }
+                        }
+                        break;
+                }
+                check = newCar;
+                newCar = null;
+            }
+            return null;
+        }
+
+
+
+
+
         // true ha lehetetlen esemény false ha lehetséges true
         private Auto CheckImpossible(Auto c)
         {
-            Auto check = null;
+            Auto check = null, hold = null;
 
             switch (c.direction)
             {
@@ -191,6 +296,10 @@ namespace ParkingGame
                         {
                             return check;
                         }
+                        if (hold == null)
+                        {
+                            hold = check;
+                        }
                     }
                     break;
                 case 1:
@@ -200,6 +309,10 @@ namespace ParkingGame
                         if (check != null && c.direction % 2 == check.direction % 2 && c.direction != check.direction)
                         {
                             return check;
+                        }
+                        if (check != null && hold == null)
+                        {
+                            hold = check;
                         }
                     }
                     break;
@@ -211,6 +324,10 @@ namespace ParkingGame
                         {
                             return check;
                         }
+                        if (check != null && hold == null)
+                        {
+                            hold = check;
+                        }
                     }
                     break;
                 case 3:
@@ -221,11 +338,25 @@ namespace ParkingGame
                         {
                             return check;
                         }
+                        if (check != null && hold == null)
+                        {
+                            hold = check;
+                        }
                     }
                     break;
             }
+            hold = CheckImpossible2(hold);
+            if (hold != null)
+            {
+                MessageBox.Show("Lehetetlent találtál, Sorry");
+                return hold;
+            }
+
             return null;
         }
+
+
+
 
         private void EnableCars()
         {
@@ -235,7 +366,7 @@ namespace ParkingGame
             }
         }
 
-
+        /*
         private void ShowHeadC()
         {
             foreach (Auto auto in autok)
@@ -252,10 +383,15 @@ namespace ParkingGame
                 Canvas.SetTop(textBlock, auto.headC.y * ga.height);
             }
         }
-
+        */
+        private int NoCarPlaced = 0;
         private async Task GenerateLayout()
         {
-            //await Task.Delay(50); // Ez biztosítja, hogy a UI frissüljön minden egyes autó elhelyezése után, így láthatod a generálás folyamatát.
+            if (NoCarPlaced < 5)
+            {
+                await Task.Delay(100);
+                PlaceAllCars();
+            }
             if (ga.width * ga.height / 2 == autok.Count)
             {
                 MessageBox.Show("Kezdődjön a játék!");
@@ -268,7 +404,7 @@ namespace ParkingGame
             do
             {
                 ErrorCount++;
-                if (ErrorCount > ga.level * 50)
+                if (ErrorCount > ga.level * 100)
                 {
                     MessageBox.Show("Kezdődjön a játék (lyukakkal)!");
                     EnableCars();
@@ -377,6 +513,7 @@ namespace ParkingGame
 
             }
 
+
             car = new Button()
             {
                 Width = (ori % 2 == 0) ? ga.widthFeloszt : ga.widthFeloszt * 2,
@@ -390,17 +527,35 @@ namespace ParkingGame
             /*Game.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(RemoveCar));*/
             Auto a = new Auto(car, ori, TopLeft, ForceCords);
 
+            Auto im = CheckImpossible(a);
+            do
+            {
+                if (im != a && im != null)
+                {
+                    autok.Remove(im);
+                    Game.Children.Remove(im.button);
+                    NoCarPlaced = 0;
+                }
+                if(im == a && a != null)
+                {
+                    NoCarPlaced++;
+                    return a;
+                }
+                im = CheckImpossible(a);
+            } while (im != null);
+
             if (a.CheckSelf(this) && CheckImpossible(a) == null)
             {
+                NoCarPlaced = 0;
                 autok.Add(a);
                 return a;
             }
 
 
-
+            NoCarPlaced++;
             return null;
         }
-
+        /*
         private Cord PlaceCar(Auto auto)
         {
             if (auto == null)
@@ -415,12 +570,12 @@ namespace ParkingGame
             }
             Auto impossible = CheckImpossible(auto);
             //Cord finale = auto.CheckSurroundings(this);
-            /*
+            
             if (finale != null || impossible != null)
             {
                 return finale;
             }
-            */
+            
             //finale = auto.CheckSurroundings(this);
             if (impossible == null)
             {
@@ -438,14 +593,14 @@ namespace ParkingGame
                 autok.Add(auto);
             }
             return null;
-            /*
+            
             else
             {
                 return finale;
             }
-            */
+            
         }
-
+        */
         // ha üres true ha foglalt false
         public bool Check(Cord c, Auto ignore = null)
         {
