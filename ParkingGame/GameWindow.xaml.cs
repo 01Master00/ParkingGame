@@ -408,34 +408,170 @@ namespace ParkingGame
         }
 
 
+        private int GetMostCommonOrientation()
+        {
+            Dictionary<int, int> orientationCount = new Dictionary<int, int>
+            {
+                { 0, 0 },
+                { 1, 0 },
+                { 2, 0 },
+                { 3, 0 }
+            };
+
+            foreach (Auto auto in autok)
+            {
+                orientationCount[auto.direction]++;
+            }
+            return orientationCount.OrderByDescending(o => o.Value).First().Key;
+        }
+        
+
         private Auto GenerateCar(Cord TopLeft, int ori)
         {
-            Cord ForceCords = new Cord(-1, -1);
+            Dictionary<int, int> orientationWeight = new Dictionary<int, int>
+            {
+                { 0, 7 },
+                { 1, 7 },
+                { 2, 7 },
+                { 3, 7 }
+            };
+            Cord ForceCords = null;
             Button car = new Button();
             List<Cord> surr = TopLeft.GetSurroundingCords(this);
-            if (surr == null)
+            if (TopLeft.x == 0)
+            {
+                orientationWeight[1] -= 2;
+            }
+            if (TopLeft.x == ga.width - 1)
+            {
+                orientationWeight[3] -= 2;
+            }
+            if (TopLeft.y == 0)
+            {
+                orientationWeight[0] -= 2;
+            }
+            if (TopLeft.y == ga.height)
+            {
+                orientationWeight[2] -= 2;
+            }
+
+
+            if (surr == null || surr.Count == 0)
             {
                 return null; //ha nincs körül szabad hely akkor nem jó
             }
-            Random rand = new Random();
-            ForceCords = surr[rand.Next(0, surr.Count)];
+            else if (surr.Count == 1)
+            {
+                ForceCords = surr[0];
+                if (ForceCords.y < TopLeft.y)
+                {
+                    ori = 2;
+                }
+                else if (ForceCords.y > TopLeft.y)
+                {
+                    ori = 0;
+                }
+                else if (ForceCords.x > TopLeft.x)
+                {
+                    ori = 3;
+                }
+                else if (ForceCords.x < TopLeft.x)
+                {
+                    ori = 1;
+                }
+            }
+            else
+            {
+                Dictionary<int, Cord> ForceOri = new Dictionary<int, Cord>();
+                foreach (Cord c in surr)
+                {
+                    if (c.y < TopLeft.y)
+                    {
+                        ForceOri[2] = c;
+                    }
+                    else if (c.y > TopLeft.y)
+                    {
+                        ForceOri[0] = c;
+                    }
+                    else if (c.x > TopLeft.x)
+                    {
+                        ForceOri[3] = c;
+                    }
+                    else if (c.x < TopLeft.x)
+                    {
+                        ForceOri[1] = c;
+                    }
 
-            if (ForceCords.y < TopLeft.y)
-            {
-                ori = 2;
+
+                    if (c.x == 0)
+                    {
+                        orientationWeight[3] -= 2;
+                    }
+                    else if(c.x == 1 && TopLeft.x != 0)
+                    {
+                        orientationWeight[3] -= 1;
+                    }
+                    if (c.x == ga.width-1)
+                    {
+                        orientationWeight[1] -= 2;
+                    }
+                    else if (c.x == ga.width - 2 && TopLeft.x != ga.width - 1)
+                    {
+                        orientationWeight[1] -= 1;
+                    }
+                    if (c.y == 0)
+                    {
+                        orientationWeight[2] -= 2;
+                    }
+                    else if (c.y == 1 && TopLeft.y != 0)
+                    {
+                        orientationWeight[2] -= 1;
+                    }
+                    if (c.y == ga.height)
+                    {
+                        orientationWeight[0] -= 2;
+                    }
+                    else if (c.y == ga.height - 1 && TopLeft.y != ga.height - 1)
+                    {
+                        orientationWeight[0] -= 1;
+                    }
+                }
+                orientationWeight[GetMostCommonOrientation()] -= 3;
+
+
+                int totalWeight = orientationWeight.Values.Sum();
+                Random rand = new Random();
+                int randomValue;
+                do
+                {
+                    randomValue = rand.Next(0, totalWeight);
+                    if (randomValue < orientationWeight[0])
+                    {
+                        ForceCords = ForceOri.ContainsKey(0) ? ForceOri[0] : null;
+                        ori = 0;
+                    }
+                    else if (randomValue < orientationWeight[0] + orientationWeight[1])
+                    {
+                        ForceCords = ForceOri.ContainsKey(1) ? ForceOri[1] : null;
+                        ori = 1;
+                    }
+                    else if (randomValue < orientationWeight[0] + orientationWeight[1] + orientationWeight[2])
+                    {
+                        ForceCords = ForceOri.ContainsKey(2) ? ForceOri[2] : null;
+                        ori = 2;
+                    }
+                    else if (randomValue < orientationWeight[0] + orientationWeight[1] + orientationWeight[2] + orientationWeight[3])
+                    {
+                        ForceCords = ForceOri.ContainsKey(3) ? ForceOri[3] : null;
+                        ori = 3;
+                    }
+                } while (ForceCords == null);
+
             }
-            else if (ForceCords.y > TopLeft.y)
-            {
-                ori = 0;
-            }
-            else if (ForceCords.x > TopLeft.x)
-            {
-                ori = 3;
-            }
-            else if (ForceCords.x < TopLeft.x)
-            {
-                ori = 1;
-            }
+
+
+
+
 
             string color = (ori == 0 ? "red" : ori == 1 ? "blue" : ori == 2 ? "yellow" : "green");
             Image carImage = new Image()
