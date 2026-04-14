@@ -189,84 +189,52 @@ namespace ParkingGame
         {
             Auto check = original;
             Auto newCar = null;
-            Auto gratis = original;
-            for (int i = 0; i < autok.Count + 7; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (check == null)
                 {
                     return null;
                 }
-                if (i % 6 == 0)
-                {
-                    gratis = check;
-                }
                 switch (check.direction)
                 {
                     case 0:
-                        for (int j = check.headC.y; j >= 0; j--)
+
+                        newCar = new Cord(check.headC.x, check.headC.y - 1).GetCarByCord(this);
+                        if (newCar != null)
                         {
-                            if (newCar != null)
+                            if (newCar == original)
                             {
-                                newCar = new Cord(check.headC.x, j).GetCarByCord(this);
-                                if (newCar == original)
-                                {
-                                    return original;
-                                }
-                                else if (newCar == gratis && gratis != null)
-                                {
-                                    return gratis;
-                                }
+                                return newCar;
                             }
                         }
                         break;
                     case 1:
-                        for (int j = check.headC.x; j <= ga.width; j++)
+                        newCar = new Cord(check.headC.x+1, check.headC.y).GetCarByCord(this);
+                        if (newCar != null)
                         {
-                            if (newCar != null)
+                            if (newCar == original)
                             {
-                                newCar = new Cord(j, check.headC.y).GetCarByCord(this);
-                                if (newCar == original)
-                                {
-                                    return original;
-                                }
-                                else if (newCar == gratis && gratis != null)
-                                {
-                                    return gratis;
-                                }
+                                return newCar;
                             }
                         }
                         break;
                     case 2:
-                        for (int j = check.headC.y; j <= ga.height; j++)
+                        newCar = new Cord(check.headC.x, check.headC.y + 1).GetCarByCord(this);
+                        if (newCar != null)
                         {
-                            if (newCar != null)
+                            if (newCar == original)
                             {
-                                newCar = new Cord(check.headC.x, j).GetCarByCord(this);
-                                if (newCar == original)
-                                {
-                                    return original;
-                                }
-                                else if (newCar == gratis && gratis != null)
-                                {
-                                    return gratis;
-                                }
+                                return newCar;
                             }
                         }
                         break;
                     case 3:
-                        for (int j = check.headC.x; j >= 0; j--)
+                        newCar = new Cord(check.headC.x-1, check.headC.y).GetCarByCord(this);
+                        if (newCar != null)
                         {
-                            if (newCar != null)
+                            if (newCar == original)
                             {
-                                newCar = new Cord(j, check.headC.y).GetCarByCord(this);
-                                if (newCar == original)
-                                {
-                                    return original;
-                                }
-                                else if (newCar == gratis && gratis != null)
-                                {
-                                    return gratis;
-                                }
+                                return newCar;
                             }
                         }
                         break;
@@ -348,7 +316,8 @@ namespace ParkingGame
             hold = CheckImpossible2(hold);
             if (hold != null)
             {
-                MessageBox.Show("Lehetetlent találtál, Sorry");
+                hold.button.IsEnabled = true;
+                MessageBox.Show("lehetetlen (loop)");
                 return hold;
             }
 
@@ -447,72 +416,25 @@ namespace ParkingGame
             {
                 return null; //ha nincs körül szabad hely akkor nem jó
             }
-            else if (surr.Count == 1)
+            Random rand = new Random();
+            ForceCords = surr[rand.Next(0, surr.Count)];
+
+            if (ForceCords.y < TopLeft.y)
             {
-                ForceCords = surr[0];
-                if (ForceCords.y > TopLeft.y)
-                {
-                    ori = 2;
-                }
-                else if (ForceCords.y < TopLeft.y)
-                {
-                    ori = 0;
-                }
-                else if (ForceCords.x > TopLeft.x)
-                {
-                    ori = 3;
-                }
-                else if (ForceCords.x < TopLeft.x)
-                {
-                    ori = 1;
-                }
+                ori = 2;
             }
-            else
+            else if (ForceCords.y > TopLeft.y)
             {
-                bool s = false;
-                Dictionary<int, Cord> dirToCord = new Dictionary<int, Cord>
-                {
-                    { 0, new Cord(TopLeft.x, TopLeft.y - 1) },
-                    { 1, new Cord(TopLeft.x - 1, TopLeft.y) },
-                    { 2, new Cord(TopLeft.x, TopLeft.y + 1) },
-                    { 3, new Cord(TopLeft.x + 1, TopLeft.y) }
-                };
-                foreach (var kvp in dirToCord)
-                {
-                    foreach (Cord cord in surr)
-                    {
-                        if (cord == kvp.Value)
-                        {
-                            ori = kvp.Key;
-                            s = true;
-                        }
-                    }
-                }
-                if (!s)
-                {
-                    Random rand = new Random();
-                    ForceCords = surr[rand.Next(0, surr.Count)];
-                    if (ForceCords.y < TopLeft.y)
-                    {
-                        ori = 2;
-                    }
-                    else if (ForceCords.y > TopLeft.y)
-                    {
-                        ori = 0;
-                    }
-                    else if (ForceCords.x > TopLeft.x)
-                    {
-                        ori = 3;
-                    }
-                    else if (ForceCords.x < TopLeft.x)
-                    {
-                        ori = 1;
-                    }
-
-                }
-
+                ori = 0;
             }
-
+            else if (ForceCords.x > TopLeft.x)
+            {
+                ori = 3;
+            }
+            else if (ForceCords.x < TopLeft.x)
+            {
+                ori = 1;
+            }
 
             car = new Button()
             {
@@ -522,6 +444,7 @@ namespace ParkingGame
                 Background = (ori == 0) ? Brushes.Green : (ori == 1) ? Brushes.Yellow : (ori == 2) ? Brushes.Blue : Brushes.Red,
                 IsEnabled = false
             };
+
 
             car.Click += new RoutedEventHandler(RemoveCar);
             /*Game.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(RemoveCar));*/
@@ -536,7 +459,7 @@ namespace ParkingGame
                     Game.Children.Remove(im.button);
                     NoCarPlaced = 0;
                 }
-                if(im == a && a != null)
+                if (im == a && a != null)
                 {
                     NoCarPlaced++;
                     return a;
