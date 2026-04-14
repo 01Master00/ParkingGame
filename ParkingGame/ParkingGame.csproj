@@ -10,16 +10,26 @@
 
   <ItemGroup>
     <None Remove="Resources\berki.png" />
+    <None Remove="Resources\blue.png" />
     <None Remove="Resources\carbg.png" />
+    <None Remove="Resources\green.png" />
     <None Remove="Resources\kramer.png" />
     <None Remove="Resources\music.mp3" />
     <None Remove="Resources\placeholderbg.png" />
+    <None Remove="Resources\red.png" />
     <None Remove="Resources\robi.png" />
+    <None Remove="Resources\yellow.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\berki.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\kramer.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -36,8 +46,14 @@
     <Resource Include="Resources\placeholderbg.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\robi.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
