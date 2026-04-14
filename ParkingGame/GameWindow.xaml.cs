@@ -513,14 +513,23 @@ namespace ParkingGame
 
             }
 
+            string color = (ori == 0 ? "red" : ori == 1 ? "blue" : ori == 2 ? "yellow" : "green");
+            Image carImage = new Image()
+            {
+                Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{color}.png", UriKind.Absolute)),
+                Stretch = Stretch.Fill,
+                RenderTransformOrigin = new Point (0.5, 0.5),
+
+                LayoutTransform = new RotateTransform(ori == 0 ? 180 : ori == 1 ? 270 : ori == 2 ? 0 : 90),
+            };
 
             car = new Button()
             {
                 Width = (ori % 2 == 0) ? ga.widthFeloszt : ga.widthFeloszt * 2,
                 Height = (ori % 2 == 0) ? ga.heightFeloszt * 2 : ga.heightFeloszt,
-                Content = (ori == 0) ? "^" : (ori == 1) ? ">" : (ori == 2) ? "v" : "<",
-                Background = (ori == 0) ? Brushes.Green : (ori == 1) ? Brushes.Yellow : (ori == 2) ? Brushes.Blue : Brushes.Red,
-                IsEnabled = false
+                Content = carImage,
+                IsEnabled = false,
+                Padding = new Thickness(0)
             };
 
             car.Click += new RoutedEventHandler(RemoveCar);
