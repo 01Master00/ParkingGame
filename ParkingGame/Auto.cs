@@ -40,25 +40,25 @@ namespace ParkingGame
 
             switch (this.direction)
             {
-                case 0: 
+                case 0:
                     for (int i = y - 1; i >= 0; i--)
                     {
                         if (!gw.Check(new Cord(x, i), this)) return false;
                     }
                     break;
-                case 1: 
+                case 1:
                     for (int i = x + 1; i < ga.width; i++)
                     {
                         if (!gw.Check(new Cord(i, y), this)) return false;
                     }
                     break;
-                case 2: 
+                case 2:
                     for (int i = y + 1; i < ga.height; i++)
                     {
                         if (!gw.Check(new Cord(x, i), this)) return false;
                     }
                     break;
-                case 3: 
+                case 3:
                     for (int i = x - 1; i >= 0; i--)
                     {
                         if (!gw.Check(new Cord(i, y), this)) return false;

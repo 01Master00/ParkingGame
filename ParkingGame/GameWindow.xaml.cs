@@ -209,7 +209,7 @@ namespace ParkingGame
                         }
                         break;
                     case 1:
-                        newCar = new Cord(check.headC.x+1, check.headC.y).GetCarByCord(this);
+                        newCar = new Cord(check.headC.x + 1, check.headC.y).GetCarByCord(this);
                         if (newCar != null)
                         {
                             if (newCar == original)
@@ -229,7 +229,7 @@ namespace ParkingGame
                         }
                         break;
                     case 3:
-                        newCar = new Cord(check.headC.x-1, check.headC.y).GetCarByCord(this);
+                        newCar = new Cord(check.headC.x - 1, check.headC.y).GetCarByCord(this);
                         if (newCar != null)
                         {
                             if (newCar == original)
@@ -316,8 +316,9 @@ namespace ParkingGame
             hold = CheckImpossible2(hold);
             if (hold != null)
             {
-                hold.button.IsEnabled = true;
-                MessageBox.Show("lehetetlen (loop)");
+                hold.button.Content = "X";
+                hold.button.Background = Brushes.Red;
+                MessageBox.Show("lehetetlen (loop) \norientáció: " + hold.direction + " " + hold.headC + " " + hold.tailC);
                 return hold;
             }
 
@@ -441,7 +442,7 @@ namespace ParkingGame
             {
                 Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/{color}.png", UriKind.Absolute)),
                 Stretch = Stretch.Fill,
-                RenderTransformOrigin = new Point (0.5, 0.5),
+                RenderTransformOrigin = new Point(0.5, 0.5),
 
                 LayoutTransform = new RotateTransform(ori == 0 ? 180 : ori == 1 ? 270 : ori == 2 ? 0 : 90),
             };
